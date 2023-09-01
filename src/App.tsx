@@ -20,21 +20,26 @@ import { Route, Routes } from 'react-router-dom'
 import PageIndex from 'pages'
 import PageEditor from 'pages/editor'
 import PageNft from 'pages/nft'
-import PageInventory from 'pages/inventory'
+import PageInventory from 'pages/PageInventory'
 import { ApiProvider } from 'hooks/use-api'
 import SignInModal from 'components/Modal/SignInModal'
 import PublicLayout from 'layouts/PublicLayout'
+import FullScreenLayout from 'layouts/FullScreenLayout'
 import PageShareEditor from 'pages/share'
 import { Web3AuthProvider } from 'hooks/use-web3auth'
+import PageDashboard from 'pages/dashboard'
 
 const App = () => {
   return (
     <Web3AuthProvider>
       <ApiProvider>
         <Routes>
-          <Route element={<MainLayout children={undefined} />}>
+          <Route element={<FullScreenLayout children={undefined} />}>
             <Route path="/" element={<PageIndex />} />
+          </Route>
+          <Route element={<MainLayout children={undefined} />}>
             <Route path="/nft" element={<PageNft />} />
+            <Route path="/dashboard" element={<PageDashboard />} />
             <Route path="/editor/:chainId/:tokenAddress/:tokenId/:version" element={<PageEditor />} />
             <Route path="/inventory" element={<PageInventory />} />
           </Route>
