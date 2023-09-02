@@ -1,15 +1,26 @@
 import { ChevronDoubleDownIcon } from '@heroicons/react/20/solid'
 import { Menu, Transition } from '@headlessui/react'
-import { Fragment, useEffect, useRef, useState } from 'react'
-import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import { Link } from 'react-router-dom'
+import { Fragment } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import AddButton from 'components/Buttons/AddButton'
 
 const PageDashboard = () => {
+  const navigate = useNavigate()
+
+  const goToNewDataset = () => {
+    navigate('/dashboard/new/data')
+  }
+
   return (
     <div className="container mx-auto">
       <div className="py-8">
-        <AddButton onClick={() => {}} name="Dataset" classNames={''} />
+        <AddButton
+          onClick={() => {
+            goToNewDataset()
+          }}
+          name="Dataset"
+          classNames={''}
+        />
       </div>
       <div className="overflow-x-auto rounded-lg border border-gray-200">
         <table className="table-fixed min-w-full divide-y-2 divide-gray-200 bg-blue-700 text-sm">

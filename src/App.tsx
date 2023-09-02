@@ -27,7 +27,8 @@ import PublicLayout from 'layouts/PublicLayout'
 import FullScreenLayout from 'layouts/FullScreenLayout'
 import PageShareEditor from 'pages/share'
 import { Web3AuthProvider } from 'hooks/use-web3auth'
-import PageDashboard from 'pages/dashboard'
+import PageDashboard from 'pages/PageDashboard'
+import PageNewDataset from 'pages/NewDataset'
 
 const App = () => {
   return (
@@ -40,6 +41,7 @@ const App = () => {
           <Route element={<MainLayout children={undefined} />}>
             <Route path="/nft" element={<PageNft />} />
             <Route path="/dashboard" element={<PageDashboard />} />
+            <Route path="/dashboard/new/data" element={<PageNewDataset />} />
             <Route path="/editor/:chainId/:tokenAddress/:tokenId/:version" element={<PageEditor />} />
             <Route path="/inventory" element={<PageInventory />} />
           </Route>
