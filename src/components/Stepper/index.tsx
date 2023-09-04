@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Stepper1Panel from './Stepper1Panel'
 import Stepper2Panel from './Stepper2Panel'
+import Stepper3Panel from './Stepper3Panel'
 
 const steps = [
   {
@@ -20,8 +21,8 @@ const steps = [
         />
       </svg>
     ),
-    title: 'NFT',
-    subtitle: 'Some info about NFT.',
+    title: 'Step 1',
+    subtitle: 'Select Your NFT',
   },
   {
     icon: (
@@ -41,8 +42,8 @@ const steps = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
       </svg>
     ),
-    title: 'Meta Contract',
-    subtitle: 'Your data category',
+    title: 'Step 2',
+    subtitle: 'Choose Smart Contract',
   },
   {
     icon: (
@@ -61,8 +62,8 @@ const steps = [
         />
       </svg>
     ),
-    title: 'Co-creation',
-    subtitle: 'Register your creation',
+    title: 'Step 3',
+    subtitle: ' Publish your creation',
   },
 ]
 
@@ -72,6 +73,8 @@ const StepperPanel = (props: { currentIndex: number }) => {
       return <Stepper1Panel />
     case 1:
       return <Stepper2Panel />
+    case 2:
+      return <Stepper3Panel />
   }
 }
 
@@ -99,7 +102,7 @@ const Stepper = () => {
               <span
                 className={`${
                   currentIndex === index ? 'border border-current bg-white' : ''
-                } flex items-center relative px-8 py-3`}
+                } flex items-center relative px-2 lg:px-8 py-3`}
               >
                 {step.icon}
                 <p className="leading-none ml-2">
