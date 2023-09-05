@@ -27,13 +27,14 @@ export const PlayIcon = () => {
   )
 }
 
-export const LoadingSpinner = () => {
+export const LoadingSpinner = ({ className = 'text-red-900' }: { className?: string }) => {
+  console.log(className)
   return (
     <svg
       aria-hidden="true"
       height="24px"
       width="24px"
-      className="animate-spin fill-white text-gray-200 dark:text-gray-600"
+      className={`animate-spin fill-white  dark:text-gray-600 ${className}`}
       viewBox="0 0 100 101"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

@@ -1,15 +1,14 @@
-import ConnectWallet from 'components/Connect/ConnectWallet';
-import { useConnectedWallet } from 'hooks/use-connected-wallet';
-import { useBoundStore } from 'store';
-import { CURRENT_CHAIN } from 'store/slices/wallet.slice';
+import { useConnectedWallet } from 'hooks/use-connected-wallet'
+import { useBoundStore } from 'store'
+import { CURRENT_CHAIN } from 'store/slices/wallet.slice'
 
 export function ConnectedWalletInfo() {
-  const { current } = useBoundStore();
-  const { disconnect, address, balance } = useConnectedWallet();
+  const { current } = useBoundStore()
+  const { disconnect, address, balance } = useConnectedWallet()
 
   return (
     <>
-      {current.chain === CURRENT_CHAIN.EVM && <ConnectWallet />}
+      {/* {current.chain === CURRENT_CHAIN.EVM && <ConnectWallet />} */}
       {current.chain === CURRENT_CHAIN.SOLANA && (
         <>
           {/* #484c50 */}
@@ -57,5 +56,5 @@ export function ConnectedWalletInfo() {
         Disconnect
       </button>
     </>
-  );
+  )
 }
