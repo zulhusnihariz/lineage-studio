@@ -62,19 +62,19 @@ export const columns: ColumnDef<Transaction>[] = [
     // minSize: 1,
   },
   {
-    accessorKey: 'method',
+    accessorKey: 'total_collab',
     header: () => 'No. of Collabs',
     cell: ({ row }) => {
-      return <span>10</span>
+      return <span>{row.getValue('total_collab')}</span>
     },
     // maxSize: 1,
     // size: 1,
     // minSize: 1,
   },
   {
-    accessorKey: 'timestamp',
+    accessorKey: 'my_collab',
     header: () => 'My Collab',
-    cell: ({ row }) => <span>{'my_collab'} </span>,
+    cell: ({ row }) => <span>{row.getValue('my_collab')} </span>,
     // maxSize: 1,
     // size: 1,
     // minSize: 1,

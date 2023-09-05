@@ -7,9 +7,9 @@ interface PaginationPanelProps<TData> {
 export const PaginationPanel = <TData,>({ table }: PaginationPanelProps<TData>) => {
   return (
     <>
-      <div className="text-black flex items-center gap-2 my-4 ml-2">
+      <div className="text-white flex items-center gap-2 my-4 ml-2">
         <button
-          className="border rounded p-1"
+          className="border rounded p-1 "
           onClick={() => table.setPageIndex(0)}
           disabled={!table.getCanPreviousPage()}
         >
@@ -38,7 +38,7 @@ export const PaginationPanel = <TData,>({ table }: PaginationPanelProps<TData>) 
             {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
           </strong>
         </span>
-        <span className="flex items-center gap-1">
+        <span className="flex items-center gap-1 text-black">
           | Go to page:
           <input
             type="number"
@@ -51,7 +51,7 @@ export const PaginationPanel = <TData,>({ table }: PaginationPanelProps<TData>) 
           />
         </span>
         <select
-          className="p-1"
+          className="p-1 w-[70px] text-black"
           value={table.getState().pagination.pageSize}
           onChange={e => {
             table.setPageSize(Number(e.target.value))
@@ -59,7 +59,7 @@ export const PaginationPanel = <TData,>({ table }: PaginationPanelProps<TData>) 
         >
           {[10, 20, 30, 40, 50].map(pageSize => (
             <option key={pageSize} value={pageSize}>
-              Show {pageSize}
+              {pageSize}
             </option>
           ))}
         </select>

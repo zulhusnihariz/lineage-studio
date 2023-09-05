@@ -21,7 +21,6 @@ const PageDashboard = () => {
   const { data: txs } = useGetTransactions({
     address,
     query: [
-      { column: 'public_key', op: '=', query: address as string },
       { column: 'status', op: '=', query: '1' },
       { column: 'method', op: '=', query: 'metadata' },
     ],
