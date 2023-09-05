@@ -56,15 +56,33 @@ function useGetTransactions(data: JSONRPCFilter<Transaction> & { address: `0x${s
     queryKey: [RQ_KEY.GET_TXS],
     queryFn: async () => {
       const txs = await rpc.getTransactions(filter)
+      const collab: Record<string, { total: number; me: number }> = {}
 
       let promises = txs.map(async el => {
-        const parsed = await parseString(el.data)
-        return { ...el, data: parsed }
+        if (!collab[el.meta_contract_id]) collab[el.meta_contract_id] = { total: 0, me: 0 }
+
+        collab[el.meta_contract_id].total += 1
+
+        if (el.public_key === address) {
+          collab[el.meta_contract_id].me += 1
+
+          const parsed = await parseString(el.data)
+          return { ...el, data: parsed }
+        }
       })
 
-      return await Promise.all(promises)
+      let fulfilled = await Promise.all(promises)
+
+      return fulfilled
+        .filter(el => el !== undefined)
+        .map(el => {
+          return {
+            ...el,
+            total_collab: collab[el?.meta_contract_id as string].total,
+            my_collab: collab[el?.meta_contract_id as string].me,
+          }
+        })
     },
-    retry: false,
     enabled: Boolean(data.address),
   })
 }
