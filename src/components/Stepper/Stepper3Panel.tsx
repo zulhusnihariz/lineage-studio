@@ -17,15 +17,13 @@ const Stepper3Panel = () => {
 
   const { address } = useAccount()
   const { mutateAsync: storeBlob } = useStoreBlob()
-  const { data, mutateAsync: publishTx } = usePublishTransaction()
-
+  const { mutateAsync: publishTx } = usePublishTransaction()
   const { signMessage: signMessageWeb3Auth, isConnected } = useWeb3Auth()
 
   const { signMessageAsync } = useSignMessage({
     async onSuccess(signature) {
       setRPCState({ publish: { signature } })
       await publishTx(tx as Transaction)
-      console.log('after publish', signature, tx)
       setModalState({ publishTxModal: { isOpen: false, isLoading: false, message: 'Published!' } })
     },
   })
@@ -45,14 +43,6 @@ const Stepper3Panel = () => {
     setRPCState({ publish: { public_key: address, data: url } })
     await signMessageAsync({ message: url })
   }
-
-  useEffect(() => {
-    async function init() {
-      //let res = await fetch('https://nftstorage.link/ipfs/bafybeie3epitmfwr6p5c56tx76zzi4nt4la7u3ci6cha2umm76c5thdj5u')
-      //console.log(res.headers?.get('content-type'))
-    }
-    init()
-  }, [])
 
   return (
     <div className="mb-0 rounded-lg shadow-lg">
@@ -108,7 +98,6 @@ const Stepper3Panel = () => {
                         <span>JPG, PNG, GIF, WEBP, MP3, WAV, MP4, GLTF, GLB or VOX. Max size 30mb.</span>
                       </p>
                     </div>
-                    <input id="dropzone-file" type="file" className="hidden" />
                   </label>
                 </div>
               </div>
