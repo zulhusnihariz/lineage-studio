@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Stepper1Panel from './Stepper1Panel'
 import Stepper2Panel from './Stepper2Panel'
 import Stepper3Panel from './Stepper3Panel'
+import { useBoundStore } from 'store'
 
 const steps = [
   {
@@ -79,7 +80,17 @@ const StepperPanel = (props: { currentIndex: number }) => {
 }
 
 const Stepper = () => {
-  const [currentIndex, setCurrentIndex] = useState(0)
+  // const [currentIndex, setCurrentIndex] = useState(0)
+  const { rpc: rpcStore, setRPCState } = useBoundStore()
+  const { stepperIndex: currentIndex } = rpcStore
+
+  /*   useEffect(() => {
+    setCurrentIndex(stepperIndex)
+  }, [stepperIndex]) */
+
+  function setCurrentIndex(index: number) {
+    setRPCState({ stepperIndex: index })
+  }
 
   return (
     <div>
@@ -115,7 +126,7 @@ const Stepper = () => {
         })}
       </ol>
       <div>
-        <StepperPanel currentIndex={currentIndex} />
+        <StepperPanel currentIndex={parseInt(`${currentIndex}`)} />
       </div>
     </div>
   )
