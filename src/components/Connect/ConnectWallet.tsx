@@ -4,6 +4,7 @@ import { useBoundStore } from 'store'
 import { CURRENT_CHAIN } from 'store/slices/wallet.slice'
 import { useEffect } from 'react'
 import { useConnect } from 'wagmi'
+import { useNavigate } from 'react-router-dom'
 interface WalletProp {
   chain: CURRENT_CHAIN
   chainId: number
@@ -12,12 +13,14 @@ interface WalletProp {
 export default function ConnectWallet(prop: WalletProp) {
   const { setCurrentWalletState, setWalletState, setModalState } = useBoundStore()
   const { isConnected, isDisconnected, address } = useAccount()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (isConnected) {
       setModalState({ signUpMain: { isOpen: false } })
       setCurrentWalletState({ chain: prop.chain })
       setWalletState({ evm: { address, publicKey: address } })
+      navigate('/dashboard')
     }
     if (isDisconnected) setCurrentWalletState({ chain: undefined })
   }, [isConnected])
