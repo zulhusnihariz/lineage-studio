@@ -95,11 +95,10 @@ export const NearIcon = () => {
 
 export const networkIcons = {
   homestead: <EthereumIcon />,
-  eth: <EthereumIcon />,
   matic: <PolygonIcon />,
   bsc: <BscIcon />,
   arbitrum: <ArbitrumIcon />,
   celo: <CeloIcon />,
-  sol: <SolanaIcon />,
+  solana: <SolanaIcon />,
   near: <NearIcon />,
 }

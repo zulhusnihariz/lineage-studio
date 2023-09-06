@@ -4,7 +4,7 @@ import { useBoundStore } from 'store'
 const chains = [
   {
     name: 'Ethereum',
-    id: 'eth',
+    id: 'homestead',
   },
   {
     name: 'Polygon',
@@ -16,7 +16,7 @@ const chains = [
   },
   {
     name: 'Solana',
-    id: 'sol',
+    id: 'solana',
   },
 ]
 

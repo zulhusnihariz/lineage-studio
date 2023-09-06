@@ -10,6 +10,7 @@ import { ChevronDoubleDownIcon } from '@heroicons/react/20/solid'
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 import { networkIcons } from 'components/Icons/network'
+import { chainIdToNetwork, networkToChainId } from 'utils'
 
 const PageDashboard = () => {
   const navigate = useNavigate()
@@ -80,7 +81,7 @@ const PageDashboard = () => {
                     <div>
                       <div className="font-semibold">{tx.token_id}</div>
                       <div className="text-sm flex items-center">
-                        {networkIcons[tx.chain_id as keyof typeof networkIcons]}
+                        {networkIcons[chainIdToNetwork(`${tx.chain_id}`) as keyof typeof networkIcons]}
                         {tx.token_address}
                       </div>
                     </div>
@@ -98,7 +99,7 @@ const PageDashboard = () => {
                         )
                       }
                     >
-                      {networkIcons[tx.chain_id as keyof typeof networkIcons]}
+                      {networkIcons[chainIdToNetwork(`${tx.chain_id}`) as keyof typeof networkIcons]}
                       <span className="">{tx.data_key}</span>
                     </p>
                   </td>
