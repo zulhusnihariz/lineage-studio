@@ -10,6 +10,7 @@ export type RPCStore = {
 export interface RPCSlice {
   rpc: RPCStore
   setRPCState: (store: Partial<RPCStore>) => void
+  resetRPCState: () => void
 }
 
 const initialRPCData = {
@@ -50,7 +51,7 @@ export const createRPCSlice: StateCreator<RPCSlice, [], [], RPCSlice> = set => {
         }))
       }
     },
-    reset: () => {
+    resetRPCState: () => {
       set({ ...initialRPCData })
     },
   }

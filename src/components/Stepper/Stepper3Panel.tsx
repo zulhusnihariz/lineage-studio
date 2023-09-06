@@ -1,17 +1,19 @@
 import GenericModal from 'components/Modal/GenericModal'
 import { useWeb3Auth } from 'hooks/use-web3auth'
 import { useState, useRef, useEffect } from 'react'
-import { usePublishTransaction, useStoreBlob } from 'repositories/rpc.repository'
+import { useGetTransactions, usePublishTransaction, useStoreBlob } from 'repositories/rpc.repository'
 import { Transaction } from 'services/rpc'
 import { useBoundStore } from 'store'
 import { useAccount, useSignMessage } from 'wagmi'
 import { LoadingSpinner } from 'components/Icons/icons'
+import NextButton from 'components/Buttons/NextButton'
+import { useNavigate } from 'react-router-dom'
 
 const Stepper3Panel = () => {
   const [image, setImage] = useState<File | null>(null)
   const imageRef = useRef<HTMLInputElement>(null)
 
-  const { rpc: rpcStore, modal, setRPCState, setModalState } = useBoundStore()
+  const { rpc: rpcStore, modal, setRPCState, resetRPCState, setModalState } = useBoundStore()
   const { publish: tx } = rpcStore
   const { publishTxModal } = modal
 
@@ -19,12 +21,15 @@ const Stepper3Panel = () => {
   const { mutateAsync: storeBlob } = useStoreBlob()
   const { mutateAsync: publishTx } = usePublishTransaction()
   const { signMessage: signMessageWeb3Auth, isConnected } = useWeb3Auth()
+  const navigate = useNavigate()
 
   const { signMessageAsync } = useSignMessage({
     async onSuccess(signature) {
       setRPCState({ publish: { signature } })
       await publishTx(tx as Transaction)
       setModalState({ publishTxModal: { isOpen: false, isLoading: false, message: 'Published!' } })
+      resetRPCState()
+      navigate('/dashboard')
     },
   })
 
@@ -42,6 +47,11 @@ const Stepper3Panel = () => {
     setModalState({ publishTxModal: { message: 'Sign message to proceed' } })
     setRPCState({ publish: { public_key: address, data: url } })
     await signMessageAsync({ message: url })
+  }
+
+  function handlePreviousClick(e: any) {
+    e.preventDefault()
+    setRPCState({ stepperIndex: 1 })
   }
 
   return (
@@ -114,24 +124,23 @@ const Stepper3Panel = () => {
           </div>
         )}
 
-        <div className="text-center items-center justify-center text-sm text-gray-400 mt-5 mx-auto">
-          <div>
-            <button
-              disabled={publishTxModal.isLoading}
-              className={`${
-                publishTxModal.isLoading ? 'cursor-not-allowed' : 'cursor-pointer'
-              } className="group relative inline-block text-sm font-medium text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"`}
-            >
-              <span className="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-indigo-600 transition-transform group-hover:translate-y-0 group-hover:translate-x-0"></span>
+        <div className="w-full flex justify-between items-center text-sm text-gray-400 mt-5 px-8">
+          <NextButton classNames="" name="Previous" onClick={handlePreviousClick} />
+          <button
+            disabled={publishTxModal.isLoading}
+            className={`${
+              publishTxModal.isLoading ? 'cursor-not-allowed' : 'cursor-pointer'
+            } className="group relative font-medium text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"`}
+          >
+            <span className="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-indigo-600 transition-transform group-hover:translate-y-0 group-hover:translate-x-0"></span>
 
-              <div
-                onClick={onClickPublish}
-                className="flex items-center relative block border border-current bg-white px-8 py-3"
-              >
-                {publishTxModal.isLoading ? <LoadingSpinner className="text-indigo-600" /> : 'Publish'}
-              </div>
-            </button>
-          </div>
+            <div
+              onClick={onClickPublish}
+              className="flex items-center relative border border-current bg-white px-8 py-3"
+            >
+              {publishTxModal.isLoading ? <LoadingSpinner className="text-indigo-600" /> : 'Publish'}
+            </div>
+          </button>
         </div>
       </div>
     </div>

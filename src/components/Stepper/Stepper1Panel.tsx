@@ -120,7 +120,7 @@ const Stepper1Panel = () => {
                 </span>
               </div>
 
-              <div className="text-center">
+              <div className="flex justify-end text-center">
                 <NextButton classNames="bg-red-300 p-3" name="Next" onClick={handleNextClick}></NextButton>
               </div>
             </form>

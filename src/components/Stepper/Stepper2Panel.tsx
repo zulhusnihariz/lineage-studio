@@ -1,4 +1,5 @@
 import { RadioGroup } from '@headlessui/react'
+import NextButton from 'components/Buttons/NextButton'
 import { useEffect, useState } from 'react'
 import { MetaContract } from 'services/rpc'
 import { useBoundStore } from 'store'
@@ -74,7 +75,12 @@ const Stepper2Panel = () => {
 
   function handleNextClick(e: any) {
     e.preventDefault()
-    setRPCState({ stepperIndex: 1 })
+    setRPCState({ stepperIndex: 2 })
+  }
+
+  function handlePreviousClick(e: any) {
+    e.preventDefault()
+    setRPCState({ stepperIndex: 0 })
   }
 
   return (
@@ -162,6 +168,10 @@ const Stepper2Panel = () => {
             ))}
           </div>
         </RadioGroup>
+      </div>
+      <div className="flex justify-between text-center">
+        <NextButton classNames="bg-red-300 p-3" name="Previous" onClick={handlePreviousClick}></NextButton>
+        <NextButton classNames="bg-red-300 p-3" name="Next" onClick={handleNextClick}></NextButton>
       </div>
     </div>
   )

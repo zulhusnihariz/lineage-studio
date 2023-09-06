@@ -163,7 +163,7 @@ const getTransactions = async (filter: JSONRPCFilter<Transaction>) => {
     }),
   })
 
-  return response.data?.result?.transactions
+  return response.data?.result?.transactions as Transaction[]
 }
 
 export default {
