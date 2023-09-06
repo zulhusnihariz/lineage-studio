@@ -44,7 +44,7 @@ const steps = [
       </svg>
     ),
     title: 'Step 2',
-    subtitle: 'Choose Smart Contract',
+    subtitle: 'Choose Meta Contract',
   },
   {
     icon: (

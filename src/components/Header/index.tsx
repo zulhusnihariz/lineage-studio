@@ -4,7 +4,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
-import logo from 'assets/img/logo.png'
+import logo from 'assets/img/logo.svg'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useConnectedWallet } from 'hooks/use-connected-wallet'
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
@@ -47,7 +47,7 @@ export default function Header() {
 
   async function onClickSignout() {
     resetAllSlices()
-    queryClient.resetQueries()
+    await queryClient.resetQueries()
     disconnect()
     navigate('/')
   }

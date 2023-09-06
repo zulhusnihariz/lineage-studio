@@ -8,11 +8,43 @@ const contracts = [
     token_key: '',
     meta_contract_id: '7e432bcd-0ca5-4f6d-8c63-2c9474ca1676',
     public_key: 'a',
+    type: 'Random',
   },
   {
     token_key: '',
     meta_contract_id: 'cfcb1bd4-4931-11ee-be56-0242ac120002',
     public_key: 'a',
+    type: 'Image',
+  },
+  {
+    token_key: '',
+    meta_contract_id: 'cfcb1bd4-4931-11ee-be56-0242ac120002',
+    public_key: 'a',
+    type: 'Metadata',
+  },
+  {
+    token_key: '',
+    meta_contract_id: 'cfcb1bd4-4931-11ee-be56-0242ac120002',
+    public_key: 'a',
+    type: 'Video',
+  },
+  {
+    token_key: '',
+    meta_contract_id: 'cfcb1bd4-4931-11ee-be56-0242ac120002',
+    public_key: 'a',
+    type: '2D Spritesheet',
+  },
+  {
+    token_key: '',
+    meta_contract_id: 'cfcb1bd4-4931-11ee-be56-0242ac120002',
+    public_key: 'a',
+    type: 'Podcast',
+  },
+  {
+    token_key: '',
+    meta_contract_id: 'cfcb1bd4-4931-11ee-be56-0242ac120002',
+    public_key: 'a',
+    type: 'Collabeat',
   },
 ]
 
@@ -46,8 +78,8 @@ const Stepper2Panel = () => {
   }
 
   return (
-    <div className="mb-0 space-y-4 p-4 shadow-lg sm:p-6 lg:px-10 lg:py-10 bg-white">
-      <div className="text-black font-semibold text-xl text-center">Smart Contract Selection</div>
+    <div className="md:mx-2 mb-0 space-y-4 p-4 shadow-lg sm:p-6 lg:px-10 lg:py-10 bg-white">
+      <div className="text-black font-semibold text-xl text-center">Meta Contract Selection</div>
 
       <hr className="mx-52 lg:mx-96 min-[1900px]:mx-[45%] border-indigo-600" />
 
@@ -79,8 +111,8 @@ const Stepper2Panel = () => {
             className="group-hover:opacity-100 transition-opacity bg-gray-800 p-2 text-[10px] text-gray-100 rounded-md absolute -right-28 w-60
               translate-y-2 opacity-0 m-4"
           >
-            Pick a relevant smart contract that matches the type of media you're about to upload. For instance, if
-            uploading an image, choose the "Image Smart Contract" to ensure proper validation and compatibility.
+            Pick a relevant contract that matches the type of media you're about to upload. For instance, if uploading
+            an image, choose the "Image Meta Contract" to ensure proper validation and compatibility.
           </span>
         </div>
       </div>
@@ -106,15 +138,15 @@ const Stepper2Panel = () => {
                         <div className="text-sm">
                           <RadioGroup.Label
                             as="p"
-                            className={`font-medium  ${checked ? 'text-white' : 'text-gray-900'}`}
+                            className={`font-semibold  ${checked ? 'text-white' : 'text-gray-900'}`}
                           >
-                            {contract.meta_contract_id}
+                            {contract.type}
                           </RadioGroup.Label>
                           <RadioGroup.Description
                             as="span"
                             className={`inline ${checked ? 'text-sky-100' : 'text-gray-500'}`}
                           >
-                            <span>{contract.public_key}</span>
+                            <span className="text-xs">{contract.meta_contract_id}</span>
                           </RadioGroup.Description>
                         </div>
                       </div>

@@ -45,20 +45,20 @@ const Stepper3Panel = () => {
   }
 
   return (
-    <div className="mb-0 rounded-lg shadow-lg">
+    <div className="mb-0 rounded-lg shadow-lg md:mx-2">
       {/* <GenericModal isOpen={Boolean(publishTxModal?.isOpen)} message={`${publishTxModal.message}`} onClose={() => {}} /> */}
-      <div className="relative flex flex-col justify-center items-center mx-auto bg-white">
+      <div className="relative flex flex-col justify-center items-center mx-auto bg-white pb-5">
         {!image ? (
-          <div className="max-h-screen pb-2 w-full items-center justify-center bg-white">
+          <div className="max-h-screen pb-2 w-full items-center justify-center text-center bg-white">
             <div className="mx-10 lg:mx-60">
               <div className="text-black text-xl font-semibold pt-10 pb-4 text-center">Upload Creation</div>
               <hr className="mx-48 min-[1900px]:mx-[45%] border-indigo-600" />
-              <div className="text-black text-[13px] pt-6 pb-4 pr-10 font-medium">
+              <div className="text-gray-400 text-sm pt-6 pb-4 pr-10 font-medium">
                 Ensure the file format is compatible with the chosen smart contract from Step 2 for optimal results.
               </div>
 
-              <div className="border-2 border-dashed border-indigo-600 px-3 py-20">
-                <div className="flex items-center justify-center text-indigo-600">
+              <div className="relative flex cursor-pointer px-5 py-4 shadow-md focus:outline-none`">
+                <div className="flex items-center justify-center text-indigo-600 border-2 border-dashed border-indigo-600 p-1">
                   <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center">
                     <div
                       onClick={onOpenFileDialog}
@@ -71,7 +71,6 @@ const Stepper3Panel = () => {
                         name="image"
                         accept="image/*"
                         onChange={e => {
-                          console.log('something changed')
                           onFileChanged(e)
                         }}
                         style={{ display: 'none' }}
@@ -115,19 +114,19 @@ const Stepper3Panel = () => {
           </div>
         )}
 
-        <div className="text-center items-center justify-center text-sm text-gray-400 min-w-[640px]  mx-auto">
+        <div className="text-center items-center justify-center text-sm text-gray-400 mt-5 mx-auto">
           <div>
             <button
               disabled={publishTxModal.isLoading}
               className={`${
                 publishTxModal.isLoading ? 'cursor-not-allowed' : 'cursor-pointer'
-              } group relative inline-block text-sm font-medium text-indigo-600 focus:outline-none focus:ring active:text-indigo-500 my-4 w-full`}
+              } className="group relative inline-block text-sm font-medium text-indigo-600 focus:outline-none focus:ring active:text-indigo-500"`}
             >
-              <span className="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-indigo-600 transition-transform group-hover:translate-y-0 group-hover:translate-x-0 w-full"></span>
+              <span className="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-indigo-600 transition-transform group-hover:translate-y-0 group-hover:translate-x-0"></span>
 
               <div
                 onClick={onClickPublish}
-                className="flex items-center justify-center relative text-center border border-current bg-white py-6 w-full"
+                className="flex items-center relative block border border-current bg-white px-8 py-3"
               >
                 {publishTxModal.isLoading ? <LoadingSpinner className="text-indigo-600" /> : 'Publish'}
               </div>

@@ -103,7 +103,7 @@ const publish = async ({
   token_id,
   version,
 }: Transaction) => {
-  return (await rpc({
+  return await rpc({
     method: 'POST',
     data: JSON.stringify({
       jsonrpc: '2.0',
@@ -123,7 +123,7 @@ const publish = async ({
       },
       id: '1',
     }),
-  })) as AxiosResponse<RPCResponse<{ transaction: Transaction }>>
+  })
 }
 
 const getMetaContractById = (meta_contract_id: string) => {
@@ -138,8 +138,8 @@ const getMetaContractById = (meta_contract_id: string) => {
   })
 }
 
-const getCompleteTransactions = async (from: number = 0, to: number = 0) => {
-  let response = (await rpc({
+const getCompleteTransactions = async (from = 0, to = 0) => {
+  const response = await rpc({
     method: 'POST',
     data: JSON.stringify({
       jsonrpc: '2.0',
@@ -147,13 +147,13 @@ const getCompleteTransactions = async (from: number = 0, to: number = 0) => {
       params: [from, to],
       id: '1',
     }),
-  })) as AxiosResponse<RPCResponse<{ transactions: Transaction[] }>, any>
+  })
 
   return response.data?.result?.transactions
 }
 
 const getTransactions = async (filter: JSONRPCFilter<Transaction>) => {
-  let response = (await rpc({
+  const response = await rpc({
     method: 'POST',
     data: JSON.stringify({
       jsonrpc: '2.0',
@@ -161,7 +161,7 @@ const getTransactions = async (filter: JSONRPCFilter<Transaction>) => {
       params: filter,
       id: '1',
     }),
-  })) as AxiosResponse<RPCResponse<{ transactions: Transaction[] }>>
+  })
 
   return response.data?.result?.transactions
 }

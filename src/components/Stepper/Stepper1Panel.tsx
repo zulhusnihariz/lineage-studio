@@ -35,7 +35,7 @@ const Stepper1Panel = () => {
   }
 
   return (
-    <section className="bg-white mx-2">
+    <section className="bg-white md:mx-2">
       <div className="lg:grid max-h-screen lg:grid-cols-12">
         <aside className="relative block h-96 lg:order-last lg:col-span-5 lg:h-full xl:col-span-5">
           <div className="bg-indigo-600 relative h-full w-full ">
@@ -49,9 +49,7 @@ const Stepper1Panel = () => {
 
         <main className="flex items-center justify-center px-2 py-10 lg:py-20 sm:px-2 lg:col-span-7 lg:px-2 lg:py-10 xl:col-span-7 lg:mx-10">
           <div className="max-w-xl lg:max-w-3xl w-full text-black">
-            <div className="text-md text-center md:text-xl md:px-10 pb-4 font-semibold">
-              Identify your NFT Network, Address, Token
-            </div>
+            <div className="text-md text-center md:text-xl md:px-10 pb-4 font-semibold">Identify your NFT</div>
 
             <hr className="mx-44 min-[1900px]:mx-[45%] border-indigo-600" />
 
