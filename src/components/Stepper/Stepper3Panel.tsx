@@ -8,6 +8,7 @@ import { useAccount, useSignMessage } from 'wagmi'
 import { LoadingSpinner } from 'components/Icons/icons'
 import NextButton from 'components/Buttons/NextButton'
 import { useNavigate } from 'react-router-dom'
+import { networkToChainId } from 'utils'
 
 const Stepper3Panel = () => {
   const [image, setImage] = useState<File | null>(null)
@@ -45,7 +46,7 @@ const Stepper3Panel = () => {
     setModalState({ publishTxModal: { isOpen: true, isLoading: true, message: 'Uploading image to IPFS' } })
     const url = await storeBlob(new Blob([image as File]))
     setModalState({ publishTxModal: { message: 'Sign message to proceed' } })
-    setRPCState({ publish: { public_key: address, data: url } })
+    setRPCState({ publish: { public_key: address, data: url, chain_id: networkToChainId(tx.chain_id as string) } })
     await signMessageAsync({ message: url })
   }
 
