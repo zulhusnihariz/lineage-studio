@@ -5,9 +5,12 @@ import { Fragment, useEffect, useRef, useState } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
 import logo from 'assets/img/logo.png'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useConnectedWallet } from 'hooks/use-connected-wallet'
-import { useAccount } from 'wagmi'
+import { useAccount, useConnect, useDisconnect } from 'wagmi'
+import { shortenAddress } from 'utils'
+import { useQueryClient } from '@tanstack/react-query'
+import { useBoundStore } from 'store'
 
 function EditActiveIcon(props: any) {
   return (
@@ -34,8 +37,20 @@ function SignoutIcon(props: any) {
 export default function Header() {
   useConnectedWallet()
 
+  const navigate = useNavigate()
+
   const [enabled, setEnabled] = useState(false)
   const { address } = useAccount()
+  const { disconnect } = useDisconnect()
+  const queryClient = useQueryClient()
+  const { resetAllSlices } = useBoundStore()
+
+  async function onClickSignout() {
+    resetAllSlices()
+    queryClient.resetQueries()
+    disconnect()
+    navigate('/')
+  }
 
   return (
     <Disclosure as="nav" className="bg-transparent">
@@ -64,6 +79,9 @@ export default function Header() {
                 pointer-events-none inline-block h-[34px] w-[34px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
               />
             </Switch>
+            <span className="whitespace-nowrap rounded-full bg-purple-100 px-2.5 py-0.5 text-lg  text-purple-700">
+              {shortenAddress(address as string, 6)}
+            </span>
             <Menu as="div" className="relative inline-block text-left">
               <div>
                 <Menu.Button className="inline-flex w-full justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
@@ -87,7 +105,7 @@ export default function Header() {
                   <div className="px-1 py-1 ">
                     <Menu.Item>
                       <button className="text-gray-900 group flex w-full items-center rounded-md px-2 py-2 text-sm">
-                        {address}
+                        {shortenAddress(address as string, 8)}
                       </button>
                     </Menu.Item>
                   </div>
@@ -116,6 +134,7 @@ export default function Header() {
                           className={`${
                             active ? 'bg-violet-500 text-white' : 'text-gray-900'
                           } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                          onClick={() => onClickSignout()}
                         >
                           {active ? (
                             <SignoutIcon className="mr-2 h-5 w-5" aria-hidden="true" />

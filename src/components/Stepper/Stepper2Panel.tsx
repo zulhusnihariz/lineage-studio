@@ -1,5 +1,7 @@
 import { RadioGroup } from '@headlessui/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { MetaContract } from 'services/rpc'
+import { useBoundStore } from 'store'
 
 const contracts = [
   {
@@ -26,29 +28,61 @@ const CheckIcon = (props: any) => {
 const Stepper2Panel = () => {
   const [selected, setSelected] = useState(contracts[0])
 
+  const { setRPCState, rpc: rpcStore } = useBoundStore()
+  const { publish } = rpcStore
+
+  function handleInputChange(e: any) {
+    const { name, value } = e.target
+    setRPCState({ publish: { [name]: value } })
+  }
+
+  useEffect(() => {
+    if (selected) setRPCState({ publish: { meta_contract_id: selected.meta_contract_id } })
+  }, [selected])
+
+  function handleNextClick(e: any) {
+    e.preventDefault()
+    setRPCState({ stepperIndex: 1 })
+  }
+
   return (
     <div className="mb-0 space-y-4 p-4 shadow-lg sm:p-6 lg:px-10 lg:py-10 bg-white">
-      <div className='text-black font-semibold text-xl text-center'>
-          Smart Contract Selection
-      </div>
+      <div className="text-black font-semibold text-xl text-center">Smart Contract Selection</div>
 
-      <hr className='mx-52 lg:mx-96 min-[1900px]:mx-[45%] border-indigo-600' />
+      <hr className="mx-52 lg:mx-96 min-[1900px]:mx-[45%] border-indigo-600" />
 
-      <div className="relative flex items-center w-3/4 mx-auto pt-6">
-          <input
-            type="text"
-            className="w-full border-gray-200 p-3 pe-12 text-sm shadow-sm mr-3 z-10"
-            placeholder="Meta Contract ID"
-          />
-          <div className="group flex relative px-3 text-black justify-end z-20">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.0" stroke="currentColor" className="w-4 h-4">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
-              </svg>
-              <span className="group-hover:opacity-100 transition-opacity bg-gray-800 p-2 text-[10px] text-gray-100 rounded-md absolute -right-28 w-60
-              translate-y-2 opacity-0 m-4">
-                Pick a relevant smart contract that matches the type of media you're about to upload. For instance, if uploading an image, choose the "Image Smart Contract" to ensure proper validation and compatibility. 
-              </span>
-          </div>
+      <div className="relative flex items-center text-black w-3/4 mx-auto pt-6">
+        <input
+          name="meta_contract_id"
+          type="text"
+          className="w-full border-gray-200 p-3 pe-12 text-sm shadow-sm mr-3 z-10"
+          placeholder="Meta Contract ID"
+          onChange={handleInputChange}
+          value={publish.meta_contract_id}
+        />
+        <div className="group flex relative px-3 text-black justify-end z-20">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth="2.0"
+            stroke="currentColor"
+            className="w-4 h-4"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
+            />
+          </svg>
+          <span
+            className="group-hover:opacity-100 transition-opacity bg-gray-800 p-2 text-[10px] text-gray-100 rounded-md absolute -right-28 w-60
+              translate-y-2 opacity-0 m-4"
+          >
+            Pick a relevant smart contract that matches the type of media you're about to upload. For instance, if
+            uploading an image, choose the "Image Smart Contract" to ensure proper validation and compatibility.
+          </span>
+        </div>
       </div>
 
       <div className="mt-4 pt-6 pb-20">
