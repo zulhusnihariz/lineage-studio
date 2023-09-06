@@ -9,6 +9,7 @@ import { useAccount } from 'wagmi'
 import { ChevronDoubleDownIcon } from '@heroicons/react/20/solid'
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
+import { networkIcons } from 'components/Icons/network'
 
 const PageDashboard = () => {
   const navigate = useNavigate()
@@ -79,16 +80,7 @@ const PageDashboard = () => {
                     <div>
                       <div className="font-semibold">{tx.token_id}</div>
                       <div className="text-sm flex items-center">
-                        <span role="img" aria-label="Ethereum Logo" className="icon-32">
-                          <svg aria-hidden="true" focusable="false" viewBox="0 0 16 16">
-                            <path
-                              fill="#ffffff"
-                              fillRule="evenodd"
-                              clipRule="evenodd"
-                              d="M11.3688 8.81011L7.68341 14L4 8.81011L7.68341 10.985L11.3688 8.81011ZM7.68341 2L11.3668 8.11174L7.68341 10.2887L4 8.11174L7.68341 2Z"
-                            ></path>
-                          </svg>
-                        </span>
+                        {networkIcons[tx.chain_id as keyof typeof networkIcons]}
                         {tx.token_address}
                       </div>
                     </div>
@@ -96,19 +88,19 @@ const PageDashboard = () => {
                   <td className="whitespace-nowrap px-4 py-2 text-white text-lg text-center">10</td>
                   <td className="whitespace-nowrap px-4 py-2 text-white text-lg text-center">1</td>
                   <td className="whitespace-nowrap px-4 py-2 text-white text-center">
-                    <Link className="flex items-center justify-center w-full" to="/">
-                      <span role="img" aria-label="Ethereum Logo" className="icon-32">
-                        <svg aria-hidden="true" focusable="false" viewBox="0 0 16 16">
-                          <path
-                            fill="#ffffff"
-                            fillRule="evenodd"
-                            clipRule="evenodd"
-                            d="M11.3688 8.81011L7.68341 14L4 8.81011L7.68341 10.985L11.3688 8.81011ZM7.68341 2L11.3668 8.11174L7.68341 10.2887L4 8.11174L7.68341 2Z"
-                          ></path>
-                        </svg>
-                      </span>
+                    <p
+                      className="flex items-center justify-center w-full"
+                      onClick={() =>
+                        window.open(
+                          `${import.meta.env.VITE_LINEAGE_EXPLORER_URL}/${tx.token_address}/${tx.token_id}/${
+                            tx.chain_id
+                          }`
+                        )
+                      }
+                    >
+                      {networkIcons[tx.chain_id as keyof typeof networkIcons]}
                       <span className="">{tx.data_key}</span>
-                    </Link>
+                    </p>
                   </td>
                   <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                     <Menu as="div" className="relative inline-block text-left">

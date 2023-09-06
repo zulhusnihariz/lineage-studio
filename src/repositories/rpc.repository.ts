@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from '@tanstack/react-query'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import rpc, { JSONRPCFilter, NftMetadata, Transaction } from '../services/rpc'
 import { useIpfs } from 'hooks/use-ipfs'
 
@@ -8,7 +8,7 @@ enum RQ_KEY {
   PUBLISH_TX = 'publish_transaction',
 }
 
-function useGetCompleteTransactions() {
+const useGetCompleteTransactions = () => {
   return useQuery({
     queryKey: [RQ_KEY.GET_COMPLETED_TXS],
     queryFn: async () => {
@@ -49,12 +49,13 @@ export async function parseString(input: string): Promise<DataTypeMetadata | Dat
   return { type: 'none', data: input }
 }
 
-function useGetTransactions(data: JSONRPCFilter<Transaction> & { address: `0x${string}` | undefined }) {
+const useGetTransactions = (data: JSONRPCFilter<Transaction> & { address: `0x${string}` | undefined }) => {
   const { address, ...filter } = data
 
   return useQuery({
     queryKey: [RQ_KEY.GET_TXS],
     queryFn: async () => {
+      console.log('inside get_txs')
       const txs = await rpc.getTransactions(filter)
       const collab: Record<string, { total: number; me: number }> = {}
 
@@ -83,19 +84,27 @@ function useGetTransactions(data: JSONRPCFilter<Transaction> & { address: `0x${s
           }
         })
     },
-    enabled: Boolean(data.address),
+    //enabled: Boolean(data.address),
   })
 }
 
-function usePublishTransaction() {
+const usePublishTransaction = () => {
+  const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async (data: Transaction) => {
       return await rpc.publish(data)
     },
+    onSuccess: async () => {
+      let timeout: NodeJS.Timeout
+      timeout = setTimeout(async () => {
+        await queryClient.invalidateQueries([RQ_KEY.GET_TXS])
+        if (timeout) clearTimeout(timeout)
+      }, 5000)
+    },
   })
 }
 
-function useStoreBlob() {
+const useStoreBlob = () => {
   const { ipfs } = useIpfs()
 
   return useMutation({

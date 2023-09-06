@@ -17,7 +17,7 @@ export type Modal = {
 export interface ModalSlice {
   modal: Modal
   setModalState: (modal: Partial<Modal>) => void
-  resetModal: () => void
+  resetModalState: () => void
 }
 
 const initialModal = {
@@ -38,7 +38,7 @@ export const createModalSlice: StateCreator<ModalSlice, [], [], ModalSlice> = se
         modal: Object.assign(state.modal, modal),
       }))
     },
-    resetModal: () => {
+    resetModalState: () => {
       set({ ...initialModal })
     },
   }

@@ -102,7 +102,6 @@ const Stepper = () => {
               className={`${
                 currentIndex === index ? 'text-indigo-600' : 'text-white'
               } group relative inline-block text-sm font-medium  focus:outline-none focus:ring cursor-pointer`}
-              onClick={() => setCurrentIndex(index)}
             >
               <span
                 className={`${
